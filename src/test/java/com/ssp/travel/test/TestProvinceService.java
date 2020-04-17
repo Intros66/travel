@@ -1,6 +1,7 @@
 package com.ssp.travel.test;
 
 import com.ssp.travel.TravelApplication;
+import com.ssp.travel.entity.Province;
 import com.ssp.travel.entity.User;
 import com.ssp.travel.service.ProvinceService;
 import com.ssp.travel.service.UserService;
@@ -10,23 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @SpringBootTest(classes = TravelApplication.class)
 @RunWith(SpringRunner.class)
-public class TestUserService {
-
-    @Autowired
-    private UserService userService;
+public class TestProvinceService {
 
     @Autowired
     private ProvinceService provinceService;
 
     @Test
-    public void testSave(){
-        User user = new User();
-        user.setUsername("sun");
-        user.setPassword("123");
-        user.setEmail("123@qq.com");
-        userService.register(user);
+    public void testFindByPage(){
+        List<Province> list = provinceService.findByPage(1, 5);
+        list.forEach(pr->{
+            System.out.println(pr);
+        });
     }
 
 }

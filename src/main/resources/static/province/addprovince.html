@@ -29,6 +29,9 @@
     </style>
 </head>
 <body>
+<div id="app">
+
+
     <div id="wrap">
         <div id="header">
             <div style="float: right;padding-top: 24px">2009/11/20</div>
@@ -40,14 +43,14 @@
             <h2>添加省份</h2>
             <form action="provincelist.html" method="post">
                 <label>
-                    <div class="label-text">省&emsp;份：</div>
-                    <input type="text" name="pname">
+                    <div class="label-text" >省&emsp;份：</div>
+                    <input type="text" v-model="province.name">
                 </label>
                 <label>
                     <div class="label-text">标&emsp;签：</div>
-                    <input type="text" name="ptag">
+                    <input type="text" v-model="province.tags">
                 </label>
-                <button type="submit">提 交</button>&emsp;
+                <button type="button" @click="saveProvinceInfo">提 交</button>&emsp;
                 <a href="provincelist.html">返回</a>
             </form>
         </div>
@@ -55,5 +58,31 @@
             ABC@126.com
         </div>
     </div>
+</div>
 </body>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            province:{}
+        },
+        methods: {
+            saveProvinceInfo() {
+                alert("axios发送请求")
+                axios.post("http://localhost:8989/province/save",this.province).then((res)=>{
+                    if(res.data.state){
+                        alert(res.data.msg+ "，点击确定跳转到省份列表页");
+                        location.href="./provincelist.html";
+                    }else{
+                        alert(res.data.msg);
+                 }
+                });
+            }
+
+        }
+
+    })
+</script>
 </html>
